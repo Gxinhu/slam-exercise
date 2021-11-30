@@ -1,8 +1,11 @@
 # 初识 SLAM
 
+
+由于 github 的 markdown 不能渲染公式，可以到我的 [notion](https://secret-cloche-bec.notion.site/SLAM-27bbe2a197cd4e12bc12d2aac3bc162e) 页面查看
+
 ## 引言
 
-SLAM 是 Simulataneout Localization and Mapping 的缩写，中文译作 “**同时定位与地图构建**“
+SLAM 是 Simulatanous Localization and Mapping 的缩写，中文译作 “**同时定位与地图构建**“
 他是搭建**特定传感器**的主体，在没有**环境先验信息**的情况下，与**运动过程中**建立**环境**的模型，同时估计自己的**运动**。
 要想机器人有自主移动的能力，并且进行只有探索，首先它需要知道两件事：
 
