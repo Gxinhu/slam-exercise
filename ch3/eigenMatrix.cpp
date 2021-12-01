@@ -4,9 +4,25 @@
 #include <Eigen/Dense>
 #include <Eigen/Core>
 
+const int MATRIX_SIZE = 50;
+const int MINI_MATRIX_SIZE = 10;
+void fetch_matrix()
+{
+    Eigen::MatrixXd matrix = Eigen::MatrixXd::Random(MINI_MATRIX_SIZE, MINI_MATRIX_SIZE);
+    Eigen::Matrix3d matrix_copy = Eigen::Matrix3d::Zero();
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix_copy(i, j) = matrix(i, j);
+        }
+    }
+
+    std::cout << matrix << std::endl;
+    std::cout << matrix_copy << std::endl;
+}
 int main(int argc, char **argv)
 {
-    const int MATRIX_SIZE = 50;
     std::cout << MATRIX_SIZE << std::endl;
     Eigen::Matrix<float, 2, 3> matrix_23;
     Eigen::Vector3d vector_3d;
@@ -15,7 +31,7 @@ int main(int argc, char **argv)
     Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> matrix_dynamic;
     Eigen::MatrixXd matrix_x;
     matrix_23 << 1, 2, 3, 4, 5, 6;
-    std::cout << "matrrix 2x3 from 1 to 6" << std::endl;
+    std::cout << "matrix 2x3 from 1 to 6" << std::endl;
     for (int i = 0; i < 2; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -37,7 +53,7 @@ int main(int argc, char **argv)
     std::cout << "trace: " << matrix_33.trace() << std::endl;
     std::cout << "times 10: " << 10 * matrix_33 << std::endl;
     std::cout << "inverse :\n " << matrix_33.inverse() << std::endl;
-    std::cout << "determinat: " << matrix_33.determinant() << std::endl;
+    std::cout << "determinant: " << matrix_33.determinant() << std::endl;
 
     Eigen::SelfAdjointEigenSolver<Eigen::Matrix3d> eigen_solver(matrix_33.transpose() * matrix_33);
     std::cout << "Eigen values= \n"
@@ -58,6 +74,6 @@ int main(int argc, char **argv)
     x = matrix_NN.colPivHouseholderQr().solve(v_Nd);
     std::cout << "time of normal inverse is " << 1000 * (clock() - time_stt) / (double)CLOCKS_PER_SEC << "ms" << std::endl;
     std::cout << "x= " << x.transpose() << std::endl;
-
+    fetch_matrix();
     return -1;
 }
