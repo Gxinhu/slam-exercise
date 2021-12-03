@@ -17,7 +17,6 @@ void fetch_matrix()
             matrix_copy(i, j) = matrix(i, j);
         }
     }
-
     std::cout << matrix << std::endl;
     std::cout << matrix_copy << std::endl;
 }
