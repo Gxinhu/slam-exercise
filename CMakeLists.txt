@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.0)
-
+set(CMAKE_TOOLCHAIN_FILE /workspace/vcpkg/scripts/buildsystems/vcpkg.cmake
+  CACHE STRING "Vcpkg toolchain file")
 project(SLAM)
-
+find_package(Sophus REQUIRED)
+find_package(OpenCV CONFIG REQUIRED)
+find_package(Eigen3 REQUIRED)
+find_package(Pangolin REQUIRED)
 set(CMAKE_CXX_FLAG "-std=c++17")
 
 add_subdirectory(src/ch2)
 add_subdirectory(src/ch3)
+add_subdirectory(src/ch4)
