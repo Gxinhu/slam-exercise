@@ -43,9 +43,9 @@ int main() {
     options.linear_solver_type = ceres::DENSE_NORMAL_CHOLESKY;
     options.minimizer_progress_to_stdout = true;
     ceres::Solver::Summary summary;
-    auto time1 = std::chrono::steady_clock().now();
+    auto time1 = std::chrono::steady_clock::now();
     ceres::Solve(options, &problem, &summary);
-    auto time2 = std::chrono::steady_clock().now();
+    auto time2 = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::duration<double>>(time2 - time1);
     std::cout << "Time is " << duration.count() << std::endl;
     std::cout << summary.BriefReport() << std::endl;

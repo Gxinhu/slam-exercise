@@ -12,9 +12,9 @@ struct CostFunctor {
         return true;
     }
 };
-int main(int argc, char** argv) {
+int main(int  /*argc*/, char** argv) {
     google::InitGoogleLogging(argv[0]);
-    double initial_x = 5.0;
+    const double initial_x = 5.0;
     double x = initial_x;
     ceres::Problem problem;
     ceres::CostFunction* cost_function = new ceres::AutoDiffCostFunction<CostFunctor, 1, 1>(

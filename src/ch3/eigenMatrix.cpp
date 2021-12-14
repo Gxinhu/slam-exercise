@@ -4,11 +4,11 @@
 #include <Eigen/Dense>
 #include <Eigen/Core>
 
-const int MATRIX_SIZE = 50;
-const int MINI_MATRIX_SIZE = 10;
+const int kMatrixSize = 50;
+const int kMiniMatrixSize = 10;
 void fetch_matrix()
 {
-    Eigen::MatrixXd matrix = Eigen::MatrixXd::Random(MINI_MATRIX_SIZE, MINI_MATRIX_SIZE);
+    Eigen::MatrixXd matrix = Eigen::MatrixXd::Random(kMiniMatrixSize, kMiniMatrixSize);
     Eigen::Matrix3d matrix_copy = Eigen::Matrix3d::Zero();
     for (int i = 0; i < 3; i++)
     {
@@ -22,7 +22,7 @@ void fetch_matrix()
 }
 int main(int argc, char **argv)
 {
-    std::cout << MATRIX_SIZE << std::endl;
+    std::cout << kMatrixSize << std::endl;
     Eigen::Matrix<float, 2, 3> matrix_23;
     Eigen::Vector3d vector_3d;
     Eigen::Matrix<float, 1, 3> matrix_13;
@@ -60,12 +60,12 @@ int main(int argc, char **argv)
     std::cout << "Eigen vectors= \n"
               << eigen_solver.eigenvectors() << std::endl;
 
-    Eigen::Matrix<double, MATRIX_SIZE, MATRIX_SIZE> matrix_NN = Eigen::MatrixXd::Random(MATRIX_SIZE, MATRIX_SIZE);
+    Eigen::Matrix<double, kMatrixSize, kMatrixSize> matrix_NN = Eigen::MatrixXd::Random(kMatrixSize, kMatrixSize);
     matrix_NN = matrix_NN * matrix_NN.transpose();
-    Eigen::Matrix<double, MATRIX_SIZE, 1> v_Nd = Eigen::MatrixXd::Random(MATRIX_SIZE, 1);
+    Eigen::Matrix<double, kMatrixSize, 1> v_Nd = Eigen::MatrixXd::Random(kMatrixSize, 1);
 
     clock_t time_stt = clock();
-    Eigen::Matrix<double, MATRIX_SIZE, 1> x = matrix_NN.inverse() * v_Nd;
+    Eigen::Matrix<double, kMatrixSize, 1> x = matrix_NN.inverse() * v_Nd;
     std::cout << "time of normal inverse is " << 1000 * (clock() - time_stt) / (double)CLOCKS_PER_SEC << "ms" << std::endl;
     std::cout << "x= " << x.transpose() << std::endl;
 

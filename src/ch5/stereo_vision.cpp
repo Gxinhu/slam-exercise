@@ -79,5 +79,5 @@ void showPointCloud(const std::vector<Eigen::Vector4d, Eigen::aligned_allocator<
         pangolin::FinishFrame();
         usleep(5000);
     }
-    return;
+    return ;
 }
