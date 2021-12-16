@@ -3,6 +3,7 @@
 #include <fmt/core.h>
 #include <iostream>
 
+#include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/core/cvstd_wrapper.hpp>
 #include <opencv2/core/types.hpp>

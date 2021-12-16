@@ -11,5 +11,7 @@ find_package(yaml-cpp CONFIG REQUIRED)
 add_executable(orb orb_cv.cpp)
 target_link_libraries(orb ${OpenCV_LIBS} fmt::fmt Eigen3::Eigen)
 
-add_executable(orb_scratch orb_scatch.cpp)
+add_executable(orb_scratch orb_scratch.cpp)
 target_link_libraries(orb_scratch PRIVATE  ${OpenCV_LIBS} fmt::fmt Eigen3::Eigen yaml-cpp)
+add_executable(pose pose_estimation_2d.cpp)
+target_link_libraries(pose  PRIVATE ${OpenCV_LIBS} fmt::fmt Eigen3::Eigen yaml-cpp)

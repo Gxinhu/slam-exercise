@@ -28,6 +28,7 @@ using DescType = std::vector<uint32_t>;
 void ComputeOrb(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints, std::vector<DescType>& descriptors);
 void BruteForceMatch(
     const std::vector<DescType>& desc1, const std::vector<DescType>& desc2, std::vector<cv::DMatch>& matches);
+
 int main() {
 
     // load image
