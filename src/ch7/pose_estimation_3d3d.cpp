@@ -203,7 +203,7 @@ void bundleAdjustmentG2o(
     optimizer.setVerbose(true);
     optimizer.initializeOptimization();
     optimizer.optimize(10);
-
+    fmt::print("hello world");
     fmt::print("rotation matrix is: {}\n", vertex_pose->estimate().rotationMatrix());
     fmt::print("translation matrix is: {}\n", vertex_pose->estimate().translation());
 }

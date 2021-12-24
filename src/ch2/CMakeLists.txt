@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 2.8)
 
 project(ch2)
 add_subdirectory(learning_cmake)
