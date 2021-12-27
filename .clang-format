@@ -73,7 +73,7 @@ BreakBeforeBinaryOperators: NonAssignment
 # BreakAfterJavaFieldAnnotations: false
 # BreakStringLiterals: true
 # ColumnLimit:     80
-ColumnLimit:     120
+ColumnLimit:     100
 # CommentPragmas:  '^ IWYU pragma:'
 # CompactNamespaces: false
 # ConstructorInitializerAllOnOneLineOrOnePerLine: false
@@ -108,21 +108,6 @@ IncludeBlocks:   Regroup
 #     Priority:        1
 #     SortPriority:    0
 #     CaseSensitive:   false
-IncludeCategories:
-  - Regex:           '^<yvals(_core)?\.h>$'
-    Priority:        1
-  - Regex:           '^<(Windows|userenv)\.h>$'
-    Priority:        3
-    SortPriority:    3
-  - Regex:           '^<WinIoCtl\.h>$'
-    Priority:        3
-    SortPriority:    4
-  - Regex:           '^<__.*\.hpp>$'
-    Priority:        2
-  - Regex:           '\.hpp[>"]$'
-    Priority:        5
-  - Regex:           '.*'
-    Priority:        2
 # IncludeIsMainRegex: '(Test)?$'
 # IncludeIsMainSourceRegex: ''
 # IndentCaseLabels: false
@@ -208,7 +193,7 @@ StatementMacros:
   - _END_EXTERN_C_UNLESS_PURE
 # TabWidth:        8
 # UseCRLF:         false
-UseCRLF:         true
+UseCRLF:         false
 # UseTab:          Never
 # WhitespaceSensitiveMacros:
 #   - STRINGIZE

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "rotation.h"
+
 #include <ceres/autodiff_cost_function.h>
 #include <ceres/cost_function.h>
 #include <ceres/loss_function.h>
@@ -23,25 +24,15 @@ public:
 
     template <typename T>
     /**
-     * @brief 
-     * 
-     * @param camera:  9d array [0-2]: angle-axis rotation, [3-5]
-
-
-       translation , [6-8] camera parameter--focal length, second adn forth order radial
-
-       distortion
-
-       * @param point 3d world point coordinate 
-     * @param prediction 2d
-
-       preditoins with center
-       of the image plane
-     * @return true 
+     * @brief transfrom point to predition
+     *
+     * @param camera:  9d array [0-2]: angle-axis rotation, [3-5] translation ,
+     * [6-8] camera parameter--focal length, second adn forth order radial
+     * distortion
+     * @param point 3d world point coordinate
+     * @param prediction 2d preditoins with center  of the image plane
+     * @return true
      * @return false
-
-
-       * 
      */
     static inline bool CamprojectionWithDistortion(const T* camera, const T* point, T* prediction) {
         T p[3];
@@ -89,7 +80,7 @@ void SolveBA(BALProblem& bal_problem) {
     double* caremas             = bal_problem.mutable_cameras();
     const double* observations  = bal_problem.observations();
     ceres::Problem problem;
-    for (int i = 0; i <bal_problem.num_observations() ; ++i) {
+    for (int i = 0; i < bal_problem.num_observations(); ++i) {
         ceres::CostFunction* cost_function;
         cost_function =
             SnavelyReprojectionError::Create(observations[2 * i + 0], observations[2 * i + 1]);
@@ -108,7 +99,8 @@ void SolveBA(BALProblem& bal_problem) {
     std::cout << "Solveing ceres Ba ..." << std::endl;
     ceres::Solver::Options options;
     options.minimizer_progress_to_stdout = true;
-    options.linear_solver_type = ceres::DENSE_SCHUR; 
+    options.linear_solver_type           = ceres::DENSE_SCHUR;
+    options.max_linear_solver_iterations = 10;
     ceres::Solver::Summary summary;
     ceres::Solve(options, &problem, &summary);
     std::cout << summary.FullReport() << std::endl;
