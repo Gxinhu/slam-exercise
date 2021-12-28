@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-
-project(visual_odometry_2)
-
+link_directories("/usr/local/lib")
 find_package(Ceres CONFIG REQUIRED)
 find_package(g2o CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
