@@ -150,7 +150,7 @@ NamespaceIndentation: All
 # PointerAlignment: Right
 PointerAlignment: Left
 # ReflowComments:  true
-# SortIncludes:    true
+SortIncludes:    true
 # SortJavaStaticImport: Before
 # SortUsingDeclarations: true
 # SpaceAfterCStyleCast: false

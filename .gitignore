@@ -9,3 +9,4 @@ lib/Sophus
 lib/*/*
 .gitignore
 compile_commands.json
+src/ch12/test_data/*

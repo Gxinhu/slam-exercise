@@ -1,15 +1,14 @@
 #include <chrono>
 #include <cmath>
-#include <fmt/core.h>
 #include <iostream>
-
-#include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/core/cvstd_wrapper.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/features2d.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
+#include <fmt/core.h>
 
 int main(int argc, char** argv) {
     if (argc != 3) {
@@ -26,7 +25,7 @@ int main(int argc, char** argv) {
     cv::Mat descriptors_2;
     cv::Ptr<cv::FeatureDetector> detector        = cv::ORB::create();
     cv::Ptr<cv::DescriptorExtractor> descriptors = cv::ORB::create();
-    cv::Ptr<cv::DescriptorMatcher> matcher       = cv::DescriptorMatcher::create("BruteForce-Hamming");
+    cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create("BruteForce-Hamming");
 
     auto t1 = std::chrono::steady_clock::now();
     detector->detect(img1, keypoints_1);
@@ -41,7 +40,8 @@ int main(int argc, char** argv) {
     fmt::print("extract ORB cost = {} seconds\n", time_used.count());
 
     cv::Mat outimg_1;
-    cv::drawKeypoints(img1, keypoints_1, outimg_1, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT);
+    cv::drawKeypoints(
+        img1, keypoints_1, outimg_1, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT);
     cv::imshow("ORB features", outimg_1);
 
     std::vector<cv::DMatch> matches;
@@ -70,8 +70,8 @@ int main(int argc, char** argv) {
             good_matches.push_back(matches[i]);
         }
     }
-    fmt::print(" the number of all matches : {}\n",matches.size());
-    fmt::print(" the number of good matches : {}\n",good_matches.size());
+    fmt::print(" the number of all matches : {}\n", matches.size());
+    fmt::print(" the number of good matches : {}\n", good_matches.size());
 
     cv::Mat img_match;
     cv::Mat img_goodmatch;

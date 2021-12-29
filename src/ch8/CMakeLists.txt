@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
+project(optical)
 link_directories("/usr/local/lib")
 find_package(Ceres CONFIG REQUIRED)
 find_package(g2o CONFIG REQUIRED)

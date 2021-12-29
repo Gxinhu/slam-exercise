@@ -5,8 +5,8 @@
 #include <DBoW3/Vocabulary.h>
 #include <cstddef>
 #include <fmt/core.h>
-#include <fmt/ranges.h>
 #include <fmt/ostream.h>
+#include <fmt/ranges.h>
 #include <iostream>
 #include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
@@ -33,7 +33,7 @@ int main() {
     // 采用同一时间采集的特征的生成字典，容易过拟合
     DBoW3::Vocabulary vocab;
     vocab.load("./src/ch11/vo.yml");
-    fmt::print("{}\n",vocab);
+    fmt::print("{}\n", vocab);
     fmt::print("creating vocabulary ...\n");
     fmt::print("done \n");
     fmt::print("compare images with image");
@@ -49,8 +49,8 @@ int main() {
     }
     fmt::print("comparing images with database");
     DBoW3::Database database(vocab, false, 0);
-    for (int i = 0; i < descriptors.size(); ++i) {
-        database.add(descriptors[i]);
+    for (auto& descriptor : descriptors) {
+        database.add(descriptor);
     }
     for (int i = 0; i < descriptors.size(); ++i) {
         DBoW3::QueryResults results;

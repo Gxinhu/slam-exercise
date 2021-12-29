@@ -1,13 +1,13 @@
-#include <fmt/core.h>
-
 #include <chrono>
+#include <fmt/core.h>
 #include <iostream>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 int main(int argc, char** argv) {
     cv::Mat image;
-    image = cv::imread("/workspace/slam-exercise/xx.png");
+    std::cout << argv[1] << std::endl;
+    image = cv::imread(argv[1]);
 
     if (image.data == nullptr) {
         std::cerr << " file " << argv[1] << " not exist!" << std::endl;
@@ -40,9 +40,12 @@ int main(int argc, char** argv) {
             }
     // You can now access the pixel value with cv::Vec3b
     std::chrono::steady_clock::time_point time3 = std::chrono::steady_clock::now();
-    std::chrono::duration<double> time_duration1 = std::chrono::duration_cast<std::chrono::duration<double>>(time2 - time1);
-    std::chrono::duration<double> time_duration2 = std::chrono::duration_cast<std::chrono::duration<double>>(time3 - time2);
-    fmt::print("iteration time1:{}, iteration time2: {}\n", time_duration1.count(), time_duration2.count());
+    std::chrono::duration<double> time_duration1 =
+        std::chrono::duration_cast<std::chrono::duration<double>>(time2 - time1);
+    std::chrono::duration<double> time_duration2 =
+        std::chrono::duration_cast<std::chrono::duration<double>>(time3 - time2);
+    fmt::print("iteration time1:{}, iteration time2: {}\n", time_duration1.count(),
+        time_duration2.count());
     // 深浅拷贝问题
     cv::Mat image_another = image;
     image_another(cv::Rect(0, 0, 100, 100)).setTo(0);

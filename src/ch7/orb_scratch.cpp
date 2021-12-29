@@ -5,10 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include <nmmintrin.h>
-#include <popcntintrin.h>
-#include <string>
-#include <yaml-cpp/yaml.h>
-
 #include <opencv2/core/base.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/core/cvstd_wrapper.hpp>
@@ -18,6 +14,9 @@
 #include <opencv2/features2d.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <popcntintrin.h>
+#include <string>
+#include <yaml-cpp/yaml.h>
 
 const int kNumberUint = 8;
 const int kUintBits   = 32;
@@ -25,9 +24,10 @@ const int kUintBits   = 32;
 // 32 位的 unsigned int 数据
 using DescType = std::vector<uint32_t>;
 
-void ComputeOrb(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints, std::vector<DescType>& descriptors);
-void BruteForceMatch(
-    const std::vector<DescType>& desc1, const std::vector<DescType>& desc2, std::vector<cv::DMatch>& matches);
+void ComputeOrb(
+    const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints, std::vector<DescType>& descriptors);
+void BruteForceMatch(const std::vector<DescType>& desc1, const std::vector<DescType>& desc2,
+    std::vector<cv::DMatch>& matches);
 
 int main() {
 
@@ -81,7 +81,8 @@ auto ReadMatFromYaml(const std::string& filename, cv::Mat& orb_pattern) {
         orb_pattern.at<int>(temprow, tempcol) = orb_array[cnt].as<int>();
     }
 }
-void ComputeOrb(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints, std::vector<DescType>& descriptors) {
+void ComputeOrb(
+    const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints, std::vector<DescType>& descriptors) {
     cv::Mat orb_pattern = cv::Mat::zeros(256, 4, CV_64FC1);
     ReadMatFromYaml("/workspace/slam-exercise/src/ch7/orb_pattern.yaml", orb_pattern);
     const int half_patch_size = 8;
@@ -119,11 +120,14 @@ void ComputeOrb(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints, std::v
                 // 采用 ORB 模型选取采样点来对比 Brief
                 cv::Point2f p(orb_pattern.at<int>(idx_pq, 0), orb_pattern.at<int>(idx_pq, 1));
                 cv::Point2f q(orb_pattern.at<int>(idx_pq, 2), orb_pattern.at<int>(idx_pq, 3));
-                // 利用先前特征点的方向信息，计算旋转后的特征，可以使得 ORB 描述子有着更好的，旋转不变性
-                cv::Point2f pp =
-                    cv::Point2f(cos_theta * p.x - sin_theta * p.y, sin_theta * p.x + cos_theta * p.y) + keypoint.pt;
-                cv::Point2f qq =
-                    cv::Point2f(cos_theta * q.x - sin_theta * q.y, sin_theta * q.x + cos_theta * q.y) + keypoint.pt;
+                // 利用先前特征点的方向信息，计算旋转后的特征，可以使得 ORB
+                // 描述子有着更好的，旋转不变性
+                cv::Point2f pp = cv::Point2f(cos_theta * p.x - sin_theta * p.y,
+                                     sin_theta * p.x + cos_theta * p.y)
+                               + keypoint.pt;
+                cv::Point2f qq = cv::Point2f(cos_theta * q.x - sin_theta * q.y,
+                                     sin_theta * q.x + cos_theta * q.y)
+                               + keypoint.pt;
                 if (img.at<uchar>(pp.y, pp.x) < img.at<uchar>(qq.y, qq.x)) {
                     // 二进制输入
                     d |= 1 << k;
@@ -137,8 +141,8 @@ void ComputeOrb(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints, std::v
 }
 
 //暴力匹配
-void BruteForceMatch(
-    const std::vector<DescType>& desc1, const std::vector<DescType>& desc2, std::vector<cv::DMatch>& matches) {
+void BruteForceMatch(const std::vector<DescType>& desc1, const std::vector<DescType>& desc2,
+    std::vector<cv::DMatch>& matches) {
     const int d_max = 40;
     for (int i = 0; i < desc1.size(); ++i) {
         if (desc1[i].empty()) {

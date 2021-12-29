@@ -22,7 +22,6 @@ public:
         return true;
     }
 
-    template <typename T>
     /**
      * @brief transfrom point to predition
      *
@@ -34,6 +33,7 @@ public:
      * @return true
      * @return false
      */
+    template <typename T>
     static inline bool CamprojectionWithDistortion(const T* camera, const T* point, T* prediction) {
         T p[3];
         AngleAxisRotatePoint(camera, point, p);

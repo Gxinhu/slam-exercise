@@ -2,6 +2,7 @@
 
 #include "random.h"
 #include "rotation.h"
+
 #include <Eigen/Core>
 #include <Eigen/Dense>
 #include <cstdio>
@@ -45,7 +46,8 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
     FscanfOrDie(fptr, "%d", &num_points_);
     FscanfOrDie(fptr, "%d", &num_observations_);
 
-    std::cout << "Header: " << num_cameras_ << " " << num_points_ << " " << num_observations_;
+    std::cout << "Header: " << num_cameras_ << " " << num_points_ << " "
+              << num_observations_;
 
     point_index_  = new int[num_observations_];
     camera_index_ = new int[num_observations_];
@@ -101,7 +103,8 @@ void BALProblem::WriteToFile(const std::string& filename) const {
         return;
     }
 
-    fprintf(fptr, "%d %d %d %d\n", num_cameras_, num_cameras_, num_points_, num_observations_);
+    fprintf(fptr, "%d %d %d %d\n", num_cameras_, num_cameras_, num_points_,
+        num_observations_);
 
     for (int i = 0; i < num_observations_; ++i) {
         fprintf(fptr, "%d %d", camera_index_[i], point_index_[i]);
@@ -157,7 +160,8 @@ void BALProblem::WriteToPLYFile(const std::string& filename) const {
     for (int i = 0; i < num_cameras(); ++i) {
         const double* camera = cameras() + camera_block_size() * i;
         CameraToAngelAxisAndCenter(camera, angle_axis, center);
-        of << center[0] << ' ' << center[1] << ' ' << center[2] << " 0 255 0" << '\n';
+        of << center[0] << ' ' << center[1] << ' ' << center[2] << " 0 255 0"
+           << '\n';
     }
 
     // Export the structure (i.e. 3D Points) as white points.
@@ -183,7 +187,8 @@ void BALProblem::CameraToAngelAxisAndCenter(
 
     // c = -R't
     Eigen::VectorXd inverse_rotation = -angle_axis_ref;
-    AngleAxisRotatePoint(inverse_rotation.data(), camera + camera_block_size() - 6, center);
+    AngleAxisRotatePoint(
+        inverse_rotation.data(), camera + camera_block_size() - 6, center);
     VectorRef(center, 3) *= -1.0;
 }
 
@@ -243,8 +248,8 @@ void BALProblem::Normalize() {
     }
 }
 
-void BALProblem::Perturb(
-    const double rotation_sigma, const double translation_sigma, const double point_sigma) {
+void BALProblem::Perturb(const double rotation_sigma,
+    const double translation_sigma, const double point_sigma) {
     assert(point_sigma >= 0.0);
     assert(rotation_sigma >= 0.0);
     assert(translation_sigma >= 0.0);
