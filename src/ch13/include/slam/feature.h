@@ -1,44 +1,31 @@
-
 #ifndef CH13_FEATURE_H_
 #define CH13_FEATURE_H_
 
-#include <Eigen/Core>
-#include <cstdint>
-#include <memory>
-#include <mutex>
-#include <opencv2/core/mat.hpp>
-#include <sophus/se3.hpp>
-#include <vector>
-
-struct Frame {
-
+#include "slam/common.h"
+#include "slam/mappoint.h"
+namespace slam {
+struct Frame;
+struct Feature {
 public:
-    Frame() = default;
-    Frame(const Sophus::SE3d& pose, const cv::Mat& left, const cv::Mat& right, long id,
-        double time_stamp);
-    Sophus::SE3d pose() {
-        std::unique_lock<std::mutex> lock(pose_mutex_);
-        return pose_;
-    }
-    void set_pose(const Sophus::SE3d pose) {
-        std::unique_lock<std::mutex> lock(pose_mutex_);
-        pose_ = pose;
-    }
-    void set_keyframe();
-    static std::shared_ptr<Frame> createFrame();
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    using Ptr = std::shared_ptr<Frame>;
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  using Ptr = std::shared_ptr<Feature>;
+  Feature() {}
+  Feature(std::shared_ptr<Frame> frame, const cv::KeyPoint &position)
+      : frame_(frame), position_(position) {}
 
-    std::uint64_t id_          = 0;
-    std::uint64_t keyframe_id_ = 0;
-    bool is_keyframe_          = false;
-    double time_stamp_;
-    Sophus::SE3d pose_;
-    std::mutex pose_mutex_;
-    cv::Mat left_img_;
-    cv::Mat right_img_;
+  std::weak_ptr<MapPoint> map_point() const { return map_point_; }
+  void set_map_point(const std::weak_ptr<MapPoint> &map_point) { map_point_ = map_point; }
 
-    std::vector<std::shared_ptr<Feature>> features_left_;
-    std::vector<std::shared_ptr<Feature>> features_right_;
+  std::weak_ptr<Frame> frame() const { return frame_; }
+
+  cv::KeyPoint position() const { return position_; }
+
+private:
+  cv::KeyPoint position_;
+  std::weak_ptr<MapPoint> map_point_;
+  std::weak_ptr<Frame> frame_;
+  bool is_outlier_ = false;
+  bool is_on_left_image_ = true;
 };
+} // namespace slam
 #endif
