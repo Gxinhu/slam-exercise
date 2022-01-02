@@ -14,11 +14,21 @@ public:
       : frame_(frame), position_(position) {}
 
   std::weak_ptr<MapPoint> map_point() const { return map_point_; }
-  void set_map_point(const std::weak_ptr<MapPoint> &map_point) { map_point_ = map_point; }
+  void set_map_point(const std::weak_ptr<MapPoint> &map_point) {
+    map_point_ = map_point;
+  }
 
   std::weak_ptr<Frame> frame() const { return frame_; }
 
   cv::KeyPoint position() const { return position_; }
+
+  bool is_outlier() const { return is_outlier_; }
+  void set_is_outlier(bool is_outlier) { is_outlier_ = is_outlier; }
+
+  bool is_on_left_image() const { return is_on_left_image_; }
+  void set_is_on_left_image(bool is_on_left_image) {
+    is_on_left_image_ = is_on_left_image;
+  }
 
 private:
   cv::KeyPoint position_;

@@ -58,7 +58,7 @@ private:
   const int num_features_tracking_bad_ = 20;
   const int num_features_needed_keyframe_ = 80;
 
-  cv::Ptr<cv::GFTTDetector> gftt_detector;
+  cv::Ptr<cv::GFTTDetector> gftt_detector_;
 };
 } // namespace slam
 
